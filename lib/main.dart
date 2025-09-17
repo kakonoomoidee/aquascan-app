@@ -1,8 +1,9 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
-import 'screens/login/login_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'screens/splash/splash_screen.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -12,10 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'AquaScan',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const LoginScreen(),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: 'Poppins',
+      ),
+      home: const SplashScreen(),
     );
   }
 }

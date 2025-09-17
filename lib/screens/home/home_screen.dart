@@ -1,10 +1,9 @@
-// lib/screens/home/home_screen.dart
 import 'package:flutter/material.dart';
 import '../../components/custom_app_bar.dart';
 import '../../components/custom_bottom_navbar.dart';
 import '../scan/camera_screen.dart';
 import '../profile/profile_screen.dart';
-import 'home_dashboard_page.dart'; // Kita pisah isi dashboard-nya biar rapi
+import 'home_dashboard_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,9 +15,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
-  // Ini adalah halaman-halaman yang akan ditampilkan
   final List<Widget> _pages = [
-    const HomeDashboardPage(), // Halaman statistik dll.
+    const HomeDashboardPage(),
     const CameraScreen(),
     const ProfileScreen(),
   ];
@@ -43,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: IndexedStack(index: _currentIndex, children: _pages),
+      body: _pages[_currentIndex],
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentIndex,
         onTap: _onItemTapped,

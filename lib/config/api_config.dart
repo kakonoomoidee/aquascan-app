@@ -1,9 +1,12 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class ApiConfig {
-  // Base URL
-  static const String baseUrl = "http://localhost:8080/api";
+  static final String baseUrl = dotenv.env['BASE_URL']!;
 
-  // Auth Endpoints
-  static const String login = "$baseUrl/login";
-  static const String profile = "$baseUrl/profile";
+  // auth endpoints
+  static final String login = "$baseUrl/login";
+  static final String profile = "$baseUrl/profile";
 
+  // data endpoints
+  static final String upload = "$baseUrl/upload";
 }
