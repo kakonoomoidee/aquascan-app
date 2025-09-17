@@ -1,24 +1,22 @@
-// lib/screens/home/home_screen.dart
 import 'package:flutter/material.dart';
-import '../../components/custom_app_bar.dart';
-import '../../components/custom_bottom_navbar.dart';
+import '../home/home_screen.dart';
 import '../scan/camera_screen.dart';
 import '../profile/profile_screen.dart';
-import 'home_dashboard_page.dart'; // Kita pisah isi dashboard-nya biar rapi
+import '../../components/custom_app_bar.dart';
+import '../../components/custom_bottom_navbar.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  // Ini adalah halaman-halaman yang akan ditampilkan
   final List<Widget> _pages = [
-    const HomeDashboardPage(), // Halaman statistik dll.
+    const HomeScreen(),
     const CameraScreen(),
     const ProfileScreen(),
   ];
@@ -35,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: _pageTitles[_currentIndex],
+        title: _pageTitles[_currentIndex], // Judul AppBar ganti sesuai halaman
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_none),

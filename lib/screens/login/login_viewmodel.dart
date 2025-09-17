@@ -1,8 +1,7 @@
-// lib/screens/login/login_viewmodel.dart
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../services/auth_service.dart';
-import '../home/home_screen.dart';
+import '../../services/auth_service.dart'; // Pastikan path ini benar
+import '../home/home_screen.dart'; // Pastikan path ini benar
 
 class LoginViewModel extends ChangeNotifier {
   final emailController = TextEditingController();
@@ -13,20 +12,25 @@ class LoginViewModel extends ChangeNotifier {
   String? emailError;
   String? passwordError;
 
+  // State tambahan untuk fitur 'intip password'
+  bool isPasswordHidden = true;
+
+  // Function untuk mengubah state password
+  void togglePasswordVisibility() {
+    isPasswordHidden = !isPasswordHidden;
+    notifyListeners();
+  }
+
   Future<void> login(BuildContext context) async {
-    // 🔹 Reset error
     emailError = null;
     passwordError = null;
+    notifyListeners();
 
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
 
-    if (email.isEmpty) {
-      emailError = "Email cannot be empty";
-    }
-    if (password.isEmpty) {
-      passwordError = "Password cannot be empty";
-    }
+    if (email.isEmpty) emailError = "Email tidak boleh kosong";
+    if (password.isEmpty) passwordError = "Password tidak boleh kosong";
 
     if (emailError != null || passwordError != null) {
       notifyListeners();
@@ -49,13 +53,23 @@ class LoginViewModel extends ChangeNotifier {
             MaterialPageRoute(builder: (_) => const HomeScreen()),
           );
         }
+      } else {
+        // Handle case where login is successful but token is null
+        passwordError = "Gagal login, coba lagi";
       }
     } catch (e) {
-      passwordError = "Invalid email or password"; // 🔹 tampil error langsung
-      notifyListeners();
+      passwordError = "Email atau password salah";
+      debugPrint("Login error: $e"); // Untuk debugging
     } finally {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }

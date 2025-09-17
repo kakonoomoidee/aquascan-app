@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  String username = "User"; // nanti bisa ambil dari API / SharedPreferences
-  int validInputs = 120;
-  int pendingInputs = 15;
-  int totalData = 135;
-  int errors = 5;
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
 
-  // contoh kalau ada update data
-  void updateStats({int? valid, int? pending, int? total, int? error}) {
-    if (valid != null) validInputs = valid;
-    if (pending != null) pendingInputs = pending;
-    if (total != null) totalData = total;
-    if (error != null) errors = error;
+  String? username;
+  int? validInputs;
+  int? pendingInputs;
+  int? totalData;
+  int? errors;
 
+  HomeViewModel() {
+    fetchDashboardData(); // Langsung panggil data saat ViewModel dibuat
+  }
+
+  // Simulasi ambil data dari API
+  Future<void> fetchDashboardData() async {
+    _isLoading = true;
+    notifyListeners();
+
+    // Anggap aja ini proses manggil API selama 2 detik
+    await Future.delayed(const Duration(seconds: 2));
+
+    username = "Petugas PDAM"; // Data dari API
+    validInputs = 120;
+    pendingInputs = 15;
+    totalData = 135;
+    errors = 5;
+
+    _isLoading = false;
     notifyListeners();
   }
 }
